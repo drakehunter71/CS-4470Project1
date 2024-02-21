@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 covid = pd.read_csv("Data/covidOriginal.csv")
 breastCancer = pd.read_csv("Data/breastCancerOriginal.csv")
@@ -20,11 +21,17 @@ def description(df):
     })
     return output
 
-print(description(covid))
-print(description(breastCancer))
-
 covid.drop(columns=["Study Title", "Study URL", "Acronym", "Brief Summary"], inplace=True)
 breastCancer.drop(columns=["Study Title", "Study URL", "Acronym", "Brief Summary"], inplace=True)
+
+for df in [covid, breastCancer]:
+    df["Has Secondary Outcome"] = np.where(df["Secondary Outcome Measures"].notnull(), 1, 0)
+    df["Has More Than 2 Outcomes"] = np.where(df["Other Outcome Measures"].notnull(), 1, 0)
+    df["Has Collaborators"] = np.where(df['Collaborators'].notnull(), 1, 0)
+    df["Has Study Docs"] = np.where(df["Study Documents"].notnull(), 1, 0)
+
+print(description(covid))
+print(description(breastCancer))
 
 covid.to_csv("Data/covid.csv")
 breastCancer.to_csv("Data/breastCancer.csv")
