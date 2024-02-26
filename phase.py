@@ -31,16 +31,17 @@ titles = ["Covid", "Breast Cancer"]
 indicator = 0
 for df in [c, bc]:
 
+    #dataframe to store counted data
     temp = pd.DataFrame(columns=["Year", "Phases", "count"])
 
+    #Count by phase for each year, ordering and concatenating results to temp
     for year in years:
         d = df[df["Start Year"] == year]["Phases"].value_counts().reset_index()
         d["Year"] = year
         for val in ["EARLY_PHASE1", "PHASE1", "PHASE1|PHASE2", "PHASE2", "PHASE2|PHASE3", "PHASE3", "PHASE4"]:
             temp = pd.concat([temp, d[d["Phases"] == val]])
 
-    print(temp)
-
+    #Plot the results
     sns.barplot(temp, x="Year", y="count", hue="Phases", palette="flare")
     plt.title("Distribution of " + titles[indicator] + " Studies by Phase Annually")
     plt.show()

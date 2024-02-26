@@ -86,6 +86,7 @@ for df in [covid, breastCancer]:
     ).dt.days
 
 
+#Creation of new categorical variable to help gorup abservations annually
 cutoffs = [date(2021, 1, 1), date(2022, 1, 1), date(2023, 1, 1), date(2024, 1, 1)]
 cutoffsText = ["2020", "2021", "2022", "2023", "2024"]
 
