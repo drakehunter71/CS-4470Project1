@@ -24,4 +24,5 @@ count1 = pd.concat([cCount, bcCount])
 
 sns.barplot(count1, x="Study Status", y="count", hue="disease", palette="flare")
 plt.title("Distribution of Studies by Status")
+plt.xticks(rotation=45)
 plt.show()
