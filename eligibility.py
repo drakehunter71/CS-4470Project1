@@ -18,7 +18,6 @@ sns.barplot(sex, x="Sex", y="count", hue="Disease", palette="flare")
 plt.title("Distribution of Studies by Sex")
 plt.show()
 
-
 #filtered = sex[sex["Sex"] != "ALL"]
 #sns.barplot(filtered, x="Sex", y="count", hue="Disease", palette="flare")
 #plt.title("Distribution of Studies by Sex (Not Including Mixed Studies)")
