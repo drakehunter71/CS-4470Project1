@@ -107,10 +107,10 @@ breastCancer["Start Year"] = breastCancer["Start Date"].apply(timeGroup)
 cnct = covid["NCT Number"]
 bcnct = breastCancer["NCT Number"]
 
-events = pd.read_csv("Data/reportedEventsOriginal.txt", delimiter="|")
-events = events[events["nct_id"].isin(cnct) | events["nct_id"].isin(bcnct)]
+# events = pd.read_csv("Data/reportedEventsOriginal.txt", delimiter="|")
+# events = events[events["nct_id"].isin(cnct) | events["nct_id"].isin(bcnct)]
 
 # Output the cleaned datasets to new csv files
-covid.to_csv("Data/covid.csv")
+# covid.to_csv("Data/covid.csv")
 breastCancer.to_csv("Data/breastCancer.csv")
 events.to_csv("Data/reportedEvents.csv")
