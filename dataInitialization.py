@@ -86,22 +86,31 @@ for df in [covid, breastCancer]:
     ).dt.days
 
 
-#Creation of new categorical variable to help gorup abservations annually
+# Creation of new categorical variable to help gorup abservations annually
 cutoffs = [date(2021, 1, 1), date(2022, 1, 1), date(2023, 1, 1), date(2024, 1, 1)]
 cutoffsText = ["2020", "2021", "2022", "2023", "2024"]
 
+
 def timeGroup(val):
-    i=0
+    i = 0
     for cutoff in cutoffs:
         if val < cutoff:
-            return(cutoffsText[i])
+            return cutoffsText[i]
         elif val > date(2023, 12, 31):
             return cutoffsText[4]
         i += 1
 
+
 covid["Start Year"] = covid["Start Date"].apply(timeGroup)
 breastCancer["Start Year"] = breastCancer["Start Date"].apply(timeGroup)
+
+cnct = covid["NCT Number"]
+bcnct = breastCancer["NCT Number"]
+
+events = pd.read_csv("Data/reportedEventsOriginal.txt", delimiter="|")
+events = events[events["nct_id"].isin(cnct) | events["nct_id"].isin(bcnct)]
 
 # Output the cleaned datasets to new csv files
 covid.to_csv("Data/covid.csv")
 breastCancer.to_csv("Data/breastCancer.csv")
+events.to_csv("Data/reportedEvents.csv")
