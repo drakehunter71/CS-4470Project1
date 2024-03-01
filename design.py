@@ -6,30 +6,6 @@ import matplotlib.pyplot as plt
 c = pd.read_csv("Data/covid.csv")
 bc = pd.read_csv("Data/breastCancer.csv")
 
-"""
-def splitDesign(design):
-    return(design.split("|")[i])
-
-temp = pd.DataFrame(columns=["Study Design"])
-
-i=0
-temp["Study Design"] = c["Study Design"].apply(splitDesign)
-print(temp["Study Design"].unique())
-
-i=1
-temp["Study Design"] = c["Study Design"].apply(splitDesign)
-print(temp["Study Design"].unique())
-
-i=2
-temp["Study Design"] = c["Study Design"].apply(splitDesign)
-print(temp["Study Design"].unique())
-
-i=3
-temp["Study Design"] = c["Study Design"].apply(splitDesign)
-print(temp["Study Design"].unique())
-
-"""
-
 #Manipulate data to acquire a df with each attribute of design separated
 def expand(design):
     values = [t.split(":")[1][1:] for t in design.split("|")]
@@ -46,6 +22,7 @@ cDesign = pd.DataFrame(expDesign)
 expDesign = {"Allocation" : [], "Intervention Model" : [], "Masking" : [], "Mask" : [], "Purpose" : []}
 bc["Study Design"].apply(expand)
 bcDesign = pd.DataFrame(expDesign)
+bcDesign["Allocation"] = bcDesign["Allocation"].replace("", "NA")
 
 #Distribution Analysis
 
@@ -61,4 +38,53 @@ for attribute in ["Allocation", "Intervention Model", "Mask", "Purpose"]:
     sns.barplot(temp, x=attribute, y="count", hue="Disease", palette="flare")
     plt.xticks(rotation=45)
     plt.title("Distribution of Studies by " + attribute)
+    plt.show()
+
+#Compare design with results
+    
+cDesign["Has Results"] = c["Study Results"]
+bcDesign["Has Results"] = bc["Study Results"]
+
+for attribute in ["Allocation", "Intervention Model", "Mask", "Purpose"]:
+
+    cTemp = cDesign[[attribute, "Has Results"]]
+    cd = {attribute : [], "Probability" : [], "Disease" : []}
+    for value in cTemp[attribute].unique():
+        df = cTemp[cTemp[attribute] == value]
+        n = df.shape[0]
+        df = df["Has Results"].value_counts().reset_index()
+        try:
+            percent = round(((df[df["Has Results"] == "YES"]["count"].iloc[0])/n)*100, 2)
+        except:
+            #Handles edge case of one category having no results at all
+            percent = 0
+        
+        cd[attribute].append(value)
+        cd["Probability"].append(percent)
+        cd["Disease"].append("Covid")
+
+    bcTemp = bcDesign[[attribute, "Has Results"]]
+    bcd = {attribute : [], "Probability" : [], "Disease" : []}
+    for value in bcTemp[attribute].unique():
+        df = bcTemp[bcTemp[attribute] == value]
+        n = df.shape[0]
+        df = df["Has Results"].value_counts().reset_index()
+        try:
+            percent = round(((df[df["Has Results"] == "YES"]["count"].iloc[0])/n)*100, 2)
+        except:
+            #Handles edge case of one category having no results at all
+            percent = 0
+        
+        bcd[attribute].append(value)
+        bcd["Probability"].append(percent)
+        bcd["Disease"].append("Covid")
+    
+    cPercents = pd.DataFrame(cd)
+    bcPercents = pd.DataFrame(bcd)
+
+    percents = pd.concat([cPercents, bcPercents])
+
+    sns.barplot(percents, x=attribute, y="Probability", hue="Disease", palette="flare")
+    plt.title("Probability of Results by " + attribute)
+    plt.xticks(rotation=45)
     plt.show()
