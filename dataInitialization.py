@@ -45,13 +45,13 @@ breastCancer.drop(
 # Define new categorical variables for attributes that are filled optionally (presence of a value may indicate a more in depth study)
 for df in [covid, breastCancer]:
     df["Has Secondary Outcome"] = np.where(
-        df["Secondary Outcome Measures"].notnull(), 1, 0
+        df["Secondary Outcome Measures"].notnull(), "YES", "NO"
     )
     df["Has More Than 2 Outcomes"] = np.where(
-        df["Other Outcome Measures"].notnull(), 1, 0
+        df["Other Outcome Measures"].notnull(), "YES", "NO"
     )
-    df["Has Collaborators"] = np.where(df["Collaborators"].notnull(), 1, 0)
-    df["Has Study Docs"] = np.where(df["Study Documents"].notnull(), 1, 0)
+    df["Has Collaborators"] = np.where(df["Collaborators"].notnull(), "YES", "NO")
+    df["Has Study Docs"] = np.where(df["Study Documents"].notnull(), "YES", "NO")
 
 
 # function used to convert the originally read in dates into date objects, retaining all missing values
