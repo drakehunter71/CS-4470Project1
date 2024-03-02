@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 c = pd.read_csv("Data/covid.csv")
 bc = pd.read_csv("Data/breastCancer.csv")
 
+
 def total(interventions):
     l = interventions.split("|")
     for intervention in l:
@@ -15,13 +16,26 @@ def total(interventions):
         else:
             count[t] = count[t] + 1
 
+
 count = {}
 c["Interventions"].apply(total)
-cCount = pd.DataFrame({"Intervention" : list(count.keys()), "count" : list(count.values()), "Disease" : ["Covid"] * len(list(count.keys()))})
+cCount = pd.DataFrame(
+    {
+        "Intervention": list(count.keys()),
+        "count": list(count.values()),
+        "Disease": ["Covid"] * len(list(count.keys())),
+    }
+)
 
 count = {}
 bc["Interventions"].apply(total)
-bcCount = pd.DataFrame({"Intervention" : list(count.keys()), "Count" : list(count.values()), "Disease" : ["Breast cancer"] * len(list(count.keys()))})
+bcCount = pd.DataFrame(
+    {
+        "Intervention": list(count.keys()),
+        "Count": list(count.values()),
+        "Disease": ["Breast cancer"] * len(list(count.keys())),
+    }
+)
 
 counts = pd.concat([cCount, bcCount])
 

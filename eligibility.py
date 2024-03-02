@@ -18,10 +18,11 @@ sns.barplot(sex, x="Sex", y="count", hue="Disease", palette="flare")
 plt.title("Distribution of Studies by Sex")
 plt.show()
 
-#filtered = sex[sex["Sex"] != "ALL"]
-#sns.barplot(filtered, x="Sex", y="count", hue="Disease", palette="flare")
-#plt.title("Distribution of Studies by Sex (Not Including Mixed Studies)")
-#plt.show()
+# filtered = sex[sex["Sex"] != "ALL"]
+# sns.barplot(filtered, x="Sex", y="count", hue="Disease", palette="flare")
+# plt.title("Distribution of Studies by Sex (Not Including Mixed Studies)")
+# plt.show()
+
 
 def counter(groupings):
     ages = groupings.split(",")
@@ -32,13 +33,26 @@ def counter(groupings):
         else:
             ageCounts[t] = ageCounts[t] + 1
 
+
 ageCounts = {}
 c["Age"].apply(counter)
-cAge = pd.DataFrame({"Age" : list(ageCounts.keys()), "count" : list(ageCounts.values()), "Disease" : ["Covid"] * len(list(ageCounts.keys()))})
+cAge = pd.DataFrame(
+    {
+        "Age": list(ageCounts.keys()),
+        "count": list(ageCounts.values()),
+        "Disease": ["Covid"] * len(list(ageCounts.keys())),
+    }
+)
 
 ageCounts = {}
 bc["Age"].apply(counter)
-bcAge = pd.DataFrame({"Age" : list(ageCounts.keys()), "count" : list(ageCounts.values()), "Disease" : ["Breast Cancer"] * len(list(ageCounts.keys()))})
+bcAge = pd.DataFrame(
+    {
+        "Age": list(ageCounts.keys()),
+        "count": list(ageCounts.values()),
+        "Disease": ["Breast Cancer"] * len(list(ageCounts.keys())),
+    }
+)
 
 age = pd.concat([cAge, bcAge])
 

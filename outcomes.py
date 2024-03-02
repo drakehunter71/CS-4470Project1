@@ -21,7 +21,12 @@ plt.show()
 
 cCount = c["Has More Than 2 Outcomes"].value_counts().reset_index()
 cCount["Disease"] = "Covid"
-cCount = pd.concat([cCount[cCount["Has More Than 2 Outcomes"] == "YES"], cCount[cCount["Has More Than 2 Outcomes"] == "NO"]])
+cCount = pd.concat(
+    [
+        cCount[cCount["Has More Than 2 Outcomes"] == "YES"],
+        cCount[cCount["Has More Than 2 Outcomes"] == "NO"],
+    ]
+)
 
 bcCount = bc["Has More Than 2 Outcomes"].value_counts().reset_index()
 bcCount["Disease"] = "Breast Cancer"
@@ -38,7 +43,7 @@ cProbs = pd.DataFrame(columns=["Has Secondary Outcome", "Probability"])
 for value in ["YES", "NO"]:
     temp = cFiltered[cFiltered["Has Secondary Outcome"] == value]
     counts = temp["Study Results"].value_counts().reset_index()
-    counts["Probability"] = round((counts["count"]/temp.shape[0])*100, 2)
+    counts["Probability"] = round((counts["count"] / temp.shape[0]) * 100, 2)
     counts["Has Secondary Outcome"] = value
     counts = counts.drop(columns=["count"])
     counts = counts[counts["Study Results"] == "YES"].drop(columns=["Study Results"])
@@ -50,7 +55,7 @@ bcProbs = pd.DataFrame(columns=["Has Secondary Outcome", "Probability"])
 for value in ["YES", "NO"]:
     temp = bcFiltered[bcFiltered["Has Secondary Outcome"] == value]
     counts = temp["Study Results"].value_counts().reset_index()
-    counts["Probability"] = round((counts["count"]/temp.shape[0])*100, 2)
+    counts["Probability"] = round((counts["count"] / temp.shape[0]) * 100, 2)
     counts["Has Secondary Outcome"] = value
     counts = counts.drop(columns=["count"])
     counts = counts[counts["Study Results"] == "YES"].drop(columns=["Study Results"])
@@ -59,7 +64,9 @@ bcProbs["Disease"] = "Breast Cancer"
 
 probs = pd.concat([cProbs, bcProbs])
 
-sns.barplot(probs, x="Disease", y="Probability", hue="Has Secondary Outcome", palette="flare")
+sns.barplot(
+    probs, x="Disease", y="Probability", hue="Has Secondary Outcome", palette="flare"
+)
 plt.title("Probability of Results Being Posted by the Presence of a Secondary Outcome")
 plt.show()
 
@@ -68,7 +75,7 @@ cProbs = pd.DataFrame(columns=["Has More Than 2 Outcomes", "Probability"])
 for value in ["YES", "NO"]:
     temp = cFiltered[cFiltered["Has More Than 2 Outcomes"] == value]
     counts = temp["Study Results"].value_counts().reset_index()
-    counts["Probability"] = round((counts["count"]/temp.shape[0])*100, 2)
+    counts["Probability"] = round((counts["count"] / temp.shape[0]) * 100, 2)
     counts["Has More Than 2 Outcomes"] = value
     counts = counts.drop(columns=["count"])
     counts = counts[counts["Study Results"] == "YES"].drop(columns=["Study Results"])
@@ -80,7 +87,7 @@ bcProbs = pd.DataFrame(columns=["Has More Than 2 Outcomes", "Probability"])
 for value in ["YES", "NO"]:
     temp = bcFiltered[bcFiltered["Has More Than 2 Outcomes"] == value]
     counts = temp["Study Results"].value_counts().reset_index()
-    counts["Probability"] = round((counts["count"]/temp.shape[0])*100, 2)
+    counts["Probability"] = round((counts["count"] / temp.shape[0]) * 100, 2)
     counts["Has More Than 2 Outcomes"] = value
     counts = counts.drop(columns=["count"])
     counts = counts[counts["Study Results"] == "YES"].drop(columns=["Study Results"])
@@ -89,6 +96,8 @@ bcProbs["Disease"] = "Breast Cancer"
 
 probs = pd.concat([cProbs, bcProbs])
 
-sns.barplot(probs, x="Disease", y="Probability", hue="Has More Than 2 Outcomes", palette="flare")
+sns.barplot(
+    probs, x="Disease", y="Probability", hue="Has More Than 2 Outcomes", palette="flare"
+)
 plt.title("Probability of Results Being Posted by the Presence More than 2 Outcomes")
 plt.show()
