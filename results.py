@@ -8,14 +8,6 @@ from datetime import date
 c = pd.read_csv("Data/covid.csv")
 bc = pd.read_csv("Data/breastCancer.csv")
 
-def timeDif(val):
-    exp = val.split("-")
-    day = date(int(exp[0]), int(exp[1]), int(exp[2]))
-    return (date.today()-day).days
-
-c["Past Completion"] = c["Completion Date"].apply(timeDif)
-bc["Past Completion"] = bc["Completion Date"].apply(timeDif)
-
 cFiltered = c[c["Past Completion"] >= 365]
 bcFiltered = bc[bc["Past Completion"] >= 365]
 
@@ -32,16 +24,6 @@ plt.title("Distribution of Studies by Presence of Results")
 plt.show()
 
 years = [2020, 2021, 2022, 2023]
-
-"""
-for year in years:
-    temp = cFiltered[cFiltered["Start Year"] == year]
-    counts = temp["Study Results"].value_counts().reset_index()
-    if counts.shape[0] == 1:
-        percent = 0
-    else:
-        percent = round((counts[counts["Study Results"] == "YES"]["count"].iloc[0]/temp.shape[0])*100, 2)
-"""
 
 cTemp = cFiltered[["Start Year", "Study Results"]]
 cProbs = pd.DataFrame(columns=["Start Year", "Probability"])

@@ -110,6 +110,12 @@ breastCancer["Start Year"] = breastCancer["Start Date"].apply(timeGroup)
 # events = pd.read_csv("Data/reportedEventsOriginal.txt", delimiter="|")
 # events = events[events["nct_id"].isin(cnct) | events["nct_id"].isin(bcnct)]
 
+def timeDif(val):
+    return (date.today()-val).days
+
+covid["Past Completion"] = covid["Completion Date"].apply(timeDif)
+breastCancer["Past Completion"] = breastCancer["Completion Date"].apply(timeDif)
+
 # Output the cleaned datasets to new csv files
 covid.to_csv("Data/covid.csv")
 breastCancer.to_csv("Data/breastCancer.csv")
