@@ -23,7 +23,7 @@ cProbs = pd.DataFrame(columns=["Has Collaborators", "Probability"])
 for value in ["YES", "NO"]:
     temp = cFiltered[cFiltered["Has Collaborators"] == value]
     counts = temp["Study Results"].value_counts().reset_index()
-    counts["Probability"] = round((counts["count"]/temp.shape[0])*100, 2)
+    counts["Probability"] = round((counts["count"] / temp.shape[0]) * 100, 2)
     counts["Has Collaborators"] = value
     counts = counts.drop(columns=["count"])
     counts = counts[counts["Study Results"] == "YES"].drop(columns=["Study Results"])
@@ -35,7 +35,7 @@ bcProbs = pd.DataFrame(columns=["Has Collaborators", "Probability"])
 for value in ["YES", "NO"]:
     temp = bcFiltered[bcFiltered["Has Collaborators"] == value]
     counts = temp["Study Results"].value_counts().reset_index()
-    counts["Probability"] = round((counts["count"]/temp.shape[0])*100, 2)
+    counts["Probability"] = round((counts["count"] / temp.shape[0]) * 100, 2)
     counts["Has Collaborators"] = value
     counts = counts.drop(columns=["count"])
     counts = counts[counts["Study Results"] == "YES"].drop(columns=["Study Results"])
@@ -44,6 +44,8 @@ bcProbs["Disease"] = "Breast Cancer"
 
 probs = pd.concat([cProbs, bcProbs])
 
-sns.barplot(probs, x="Disease", y="Probability", hue="Has Collaborators", palette="flare")
+sns.barplot(
+    probs, x="Disease", y="Probability", hue="Has Collaborators", palette="flare"
+)
 plt.title("Probability of Results Being Posted by the Presence of Collaborators")
 plt.show()

@@ -30,19 +30,19 @@ cProbs = pd.DataFrame(columns=["Start Year", "Probability"])
 for year in years:
     temp = cTemp[cTemp["Start Year"] == year]
     counts = temp["Study Results"].value_counts().reset_index()
-    counts["Probability"] = round((counts["count"]/temp.shape[0])*100, 2)
+    counts["Probability"] = round((counts["count"] / temp.shape[0]) * 100, 2)
     counts["Start Year"] = year
     counts = counts.drop(columns=["count"])
     counts = counts[counts["Study Results"] == "YES"].drop(columns=["Study Results"])
     cProbs = pd.concat([cProbs, counts])
 cProbs["Disease"] = "Covid"
-    
+
 bcTemp = bcFiltered[["Start Year", "Study Results"]]
 bcProbs = pd.DataFrame(columns=["Start Year", "Probability"])
 for year in years:
     temp = bcTemp[bcTemp["Start Year"] == year]
     counts = temp["Study Results"].value_counts().reset_index()
-    counts["Probability"] = round((counts["count"]/temp.shape[0])*100, 2)
+    counts["Probability"] = round((counts["count"] / temp.shape[0]) * 100, 2)
     counts["Start Year"] = year
     counts = counts.drop(columns=["count"])
     counts = counts[counts["Study Results"] == "YES"].drop(columns=["Study Results"])
@@ -52,5 +52,7 @@ bcProbs["Disease"] = "Breast Cancer"
 probs = pd.concat([cProbs, bcProbs])
 
 sns.barplot(probs, x="Disease", y="Probability", hue="Start Year", palette="flare")
-plt.title("Probability of Results Being Posted by Start Year (Completed for at Least a Year)")
+plt.title(
+    "Probability of Results Being Posted by Start Year (Completed for at Least a Year)"
+)
 plt.show()

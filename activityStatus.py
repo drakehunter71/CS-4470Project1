@@ -9,8 +9,17 @@ bc = pd.read_csv("Data/breastCancer.csv")
 cCount = pd.DataFrame(columns=["Study Status", "count", "Disease"])
 bcCount = pd.DataFrame(columns=["Study Status", "count", "Disease"])
 
-order = ["NOT_YET_RECRUITING", "RECRUITING", "ENROLLING_BY_INVITATION", "ACTIVE_NOT_RECRUITING", "cOMPLETED", "TERMINATED",
-         "SUSPENDED", "WITHDRAWN", "UNKNOWN"]
+order = [
+    "NOT_YET_RECRUITING",
+    "RECRUITING",
+    "ENROLLING_BY_INVITATION",
+    "ACTIVE_NOT_RECRUITING",
+    "cOMPLETED",
+    "TERMINATED",
+    "SUSPENDED",
+    "WITHDRAWN",
+    "UNKNOWN",
+]
 
 temp = c["Study Status"].value_counts().reset_index()
 temp["Disease"] = "Covid"
