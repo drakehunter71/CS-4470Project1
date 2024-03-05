@@ -95,7 +95,7 @@ for attribute in ["Allocation", "Intervention Model", "Mask", "Purpose"]:
 
         bcd[attribute].append(value)
         bcd["Probability"].append(percent)
-        bcd["Disease"].append("Covid")
+        bcd["Disease"].append("Breast Cancer")
 
     cPercents = pd.DataFrame(cd)
     bcPercents = pd.DataFrame(bcd)
