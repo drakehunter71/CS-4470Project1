@@ -16,6 +16,7 @@ sex = pd.concat([cSex, bcSex])
 
 sns.barplot(sex, x="Sex", y="count", hue="Disease", palette="flare")
 plt.title("Distribution of Studies by Sex")
+plt.savefig("GraphImages/studyBySex.png")
 plt.show()
 
 # filtered = sex[sex["Sex"] != "ALL"]
@@ -58,4 +59,5 @@ age = pd.concat([cAge, bcAge])
 
 sns.barplot(age, x="Age", y="count", hue="Disease", palette="flare")
 plt.title("Distribution of Studies by Age Grouping")
+plt.savefig("GraphImages/studyByAgeGrouping.png")
 plt.show()
