@@ -18,7 +18,7 @@ sns.barplot(count, x="Has Collaborators", y="count", hue="Disease", palette="fla
 plt.title("Distribution of Studies by Presence of Collaborators")
 plt.show()
 
-cFiltered = c[["Has Collaborators", "Study Results"]]
+cFiltered = c[c["Past Completion"] >= 365]
 cProbs = pd.DataFrame(columns=["Has Collaborators", "Probability"])
 for value in ["YES", "NO"]:
     temp = cFiltered[cFiltered["Has Collaborators"] == value]
@@ -30,7 +30,7 @@ for value in ["YES", "NO"]:
     cProbs = pd.concat([cProbs, counts])
 cProbs["Disease"] = "Covid"
 
-bcFiltered = bc[["Has Collaborators", "Study Results"]]
+bcFiltered = bc[bc["Past Completion"] >= 365]
 bcProbs = pd.DataFrame(columns=["Has Collaborators", "Probability"])
 for value in ["YES", "NO"]:
     temp = bcFiltered[bcFiltered["Has Collaborators"] == value]
