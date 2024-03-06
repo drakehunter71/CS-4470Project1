@@ -31,7 +31,9 @@ breastCancer["Dataset"] = "Breast Cancer"
 
 combined_df = pd.concat([covid, breastCancer])
 
-sb.displot(data=combined_df, x="Study Length", hue="Dataset", kind="kde")
+sb.displot(
+    data=combined_df, x="Study Length", hue="Dataset", kind="kde", palette="flare"
+)
 plt.title("Study Length KDE")
 plt.xlabel("Study Length (days)")
 plt.ylabel("Density")
@@ -39,10 +41,19 @@ plt.tight_layout()
 plt.savefig("GraphImages/bothStudyLengthDensity.png")
 plt.show()
 
-for df in [covid, breastCancer]:
-    for hue in [""]:
-        sb.displot(data=df, x="Study Length", hue="Phases", kind="kde")
-        plt.title("Study Length KDE")
-        plt.xlabel("Study Length (days)")
-        plt.ylabel("Density")
-        plt.show()
+
+sb.displot(data=covid, x="Study Length", hue="Phases", kind="kde", palette="hls")
+plt.title("Study Length Covid")
+plt.xlabel("Study Length (days)")
+plt.ylabel("Density")
+plt.tight_layout()
+plt.savefig("GraphImages/covidDurationByPhases.png")
+plt.show()
+
+sb.displot(data=breastCancer, x="Study Length", hue="Phases", kind="kde", palette="hls")
+plt.title("Study Length Breast Cancer")
+plt.xlabel("Study Length (days)")
+plt.ylabel("Density")
+plt.tight_layout()
+plt.savefig("GraphImages/breastCancerDurationByPhases.png")
+plt.show()

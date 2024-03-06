@@ -68,6 +68,7 @@ sns.barplot(
     probs, x="Disease", y="Probability", hue="Has Secondary Outcome", palette="flare"
 )
 plt.title("Probability of Results Being Posted by the Presence of a Secondary Outcome")
+plt.savefig("GraphImages/studyByOutcomes2.png")
 plt.show()
 
 cFiltered = c[["Has More Than 2 Outcomes", "Study Results"]]
@@ -100,4 +101,5 @@ sns.barplot(
     probs, x="Disease", y="Probability", hue="Has More Than 2 Outcomes", palette="flare"
 )
 plt.title("Probability of Results Being Posted by the Presence More than 2 Outcomes")
+plt.savefig("GraphImages/studyByOutcomesMore.png")
 plt.show()
